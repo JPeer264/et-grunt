@@ -42,10 +42,10 @@ require('et-grunt')(grunt, {
 
 *Result:*
 ```shell
-manage
-manage:sass
-manage:js
-manage:app
+grunt manage
+grunt manage:sass
+grunt manage:js
+grunt manage:app
 ```
 
 ## Future
