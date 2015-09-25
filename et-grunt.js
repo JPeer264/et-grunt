@@ -1,7 +1,13 @@
 var count = 0;
 var cachedCountArray = 0;
 
-generateTasks = module.exports = function(grunt, tasks, toRegisterTasks, countArray) {
+var et = {
+	tasks: {}
+};
+
+
+et.makeTasks = function(tasks, toRegisterTasks, countArray) {
+	var grunt = et.grunt;
 	var singleTasks;
 	toRegisterTasks = toRegisterTasks || new Array();
 
@@ -29,7 +35,7 @@ generateTasks = module.exports = function(grunt, tasks, toRegisterTasks, countAr
 				// grunt.verbose.writeln('Tasks: ' + toRegisterTasks);
 
 				cachedCountArray = countArray;
-				generateTasks(grunt, tasks[keyValue], toRegisterTasks, countArray)
+				et.makeTasks(tasks[keyValue], toRegisterTasks, countArray);
 			} else {
 				var adding = '';
 				var showTasks = '';
@@ -44,8 +50,8 @@ generateTasks = module.exports = function(grunt, tasks, toRegisterTasks, countAr
 				cachedCountArray = countArray;
 
 				grunt.verbose.writeln('');
-				grunt.verbose.writeln('_________'.bold.green);
-				grunt.verbose.writeln('Generate:'.green);
+				grunt.verbose.writeln('_____________________'.bold.green);
+				grunt.verbose.writeln('Successful generated:'.green);
 
 				if (keyValue !== 'default') {
 					if (toRegisterTasks.length === 0) {
@@ -65,4 +71,16 @@ generateTasks = module.exports = function(grunt, tasks, toRegisterTasks, countAr
 	}
 
 	count++;
+}
+
+module.exports = function factory(grunt, tasks, jitMappings) {
+	et.grunt = grunt;
+	et.tasks = tasks;
+
+	// initialize tasks
+	et.makeTasks(tasks);
+
+	if (jitMappings) {
+		require('jit-grunt')(grunt, jitMappings);
+	}
 }
