@@ -1,0 +1,23 @@
+{
+  "name": "et-grunt",
+  "version": "0.0.1",
+  "description": "",
+  "main": "et-grunt.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "grunt"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpeer264/et-grunt.git"
+  },
+  "author": {
+    "name": "Jan Peer",
+    "email": "janpeer264@gmail.com",
+    "url": "http://www.jpeer.at"
+  },
+  "license": "MIT"
+}
