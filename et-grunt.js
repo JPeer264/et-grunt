@@ -169,9 +169,9 @@ module.exports = function factory(grunt, tasks, jitMappings) {
 	et.registerSmartTableTask();
 
 	// jit-grunt static mappings || https://github.com/shootaroo/jit-grunt#static-mappings
-	if (jitMappings) {
-		require('jit-grunt')(grunt, jitMappings);
-	}
+	jitMappings = jitMappings || {};
+
+	require('jit-grunt')(grunt, jitMappings);
 
 	// jit-grunt options || https://github.com/shootaroo/jit-grunt#options
 	return function (options) {
