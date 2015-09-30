@@ -90,6 +90,9 @@ et.saveTasks = function(tasks, toRegisterTasks, countObject) {
 	count++;
 };
 
+/**
+ * register every task which is saved in generatedTasks
+ */
 et.registerTasks = function() {
 	var grunt = et.grunt;
 	var tasks = et.generatedTasks;
@@ -100,20 +103,23 @@ et.registerTasks = function() {
 
 		grunt.registerTask(task, opts);
 
-		// grunt.verbose.writeln('_____________________'.bold.green);
-		// grunt.verbose.writeln('Successful generated:'.green);
-		// grunt.verbose.writeln('Task:    ' + task);
-		// grunt.verbose.writeln('Options: ' + opts);
-		// grunt.verbose.writeln('');
+		grunt.verbose.writeln('_____________________'.bold.green);
+		grunt.verbose.writeln('Successful generated:'.green);
+		grunt.verbose.writeln('Task:    ' + task);
+		grunt.verbose.writeln('Options: ' + opts);
+		grunt.verbose.writeln('');
 	});
 };
 
+/**
+ * register the `tasks` task.
+ */
 et.registerSmartTableTask = function() {
 	var grunt = et.grunt;
 	var tasks = et.generatedTasks;
 
 	// register tasks list
-	grunt.registerTask('tasks', function (extention) {
+	grunt.registerTask('tasks', function (extension) {
 		
 		// layout purposes
 		grunt.log.writeln('===============');
@@ -129,7 +135,7 @@ et.registerSmartTableTask = function() {
 			var opts = elem.options;
 
 			// show the task
-			switch(extention) {
+			switch(extension) {
 				// easter egg
 				case 'zebra': grunt.log.ok((task).zebra);
 				break;
@@ -142,7 +148,7 @@ et.registerSmartTableTask = function() {
 			}
 
 			// show the options just if the subtask is ext or extended
-			if (extention === 'ext' || extention === 'extended') {
+			if (extension === 'ext' || extension === 'extended') {
 				console.log(opts);
 			}
 

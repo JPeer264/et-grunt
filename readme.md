@@ -1,7 +1,7 @@
-# et-grunt 0.1.0 [![npm version](https://badge.fury.io/js/et-grunt.svg)](http://badge.fury.io/js/et-grunt)
-Grunt task loader including [jit-grunt](https://www.npmjs.com/package/jit-grunt)
+# et-grunt 0.1.1 [![npm version](https://badge.fury.io/js/et-grunt.svg)](http://badge.fury.io/js/et-grunt)
+> Grunt task manager including [jit-grunt](https://www.npmjs.com/package/jit-grunt)
 
-> et-grunt is a task manager which makes your life easier. It loads tasks when you really need them.
+et-grunt is a task manager which makes your life easier. It also loads tasks when you really need them.
 
 ## Before
 ```js
@@ -215,8 +215,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
-
-
-
-
