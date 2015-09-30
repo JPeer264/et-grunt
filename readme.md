@@ -188,6 +188,7 @@ Run `grunt tasks:ext` or `grunt tasks:extended`
 
 ## Release History
 
+- 2015-09-30   v0.1.1   Small fixes
 - 2015-09-30   v0.1.0   Added jit-grunt options support + pre-registered task.
 - 2015-09-25   v0.0.2   Added jit-grunt static maps support.
 - 2015-09-25   v0.0.1   First release.
