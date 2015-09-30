@@ -1,4 +1,4 @@
-# et-grunt 0.1.1 [![npm version](https://badge.fury.io/js/et-grunt.svg)](http://badge.fury.io/js/et-grunt)
+# et-grunt 0.1.1 [![npm version](https://badge.fury.io/js/et-grunt.svg)](http://badge.fury.io/js/et-grunt) [![Build Status](https://travis-ci.org/JPeer264/et-grunt.svg?branch=master)](https://travis-ci.org/JPeer264/et-grunt)
 > Grunt task manager including [jit-grunt](https://www.npmjs.com/package/jit-grunt)
 
 et-grunt is a task manager which makes your life easier. It also loads tasks when you really need them.
