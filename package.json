@@ -1,6 +1,6 @@
 {
   "name": "et-grunt",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "",
   "keywords": [
     "grunt",
@@ -9,7 +9,10 @@
     "loader",
     "tasks",
     "overview",
-    "faster"
+    "faster",
+    "management",
+    "etgrunt",
+    "et"
   ],
   "main": "et-grunt.js",
   "engines": {
@@ -28,7 +31,6 @@
     "email": "janpeer264@gmail.com",
     "url": "http://www.jpeer.at"
   },
-  "license": "MIT",
   "dependencies": {
     "jit-grunt": "^0.9.1"
   },

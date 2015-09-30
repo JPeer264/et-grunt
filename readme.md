@@ -1,7 +1,7 @@
-# et-grunt 0.0.2 [![npm version](https://badge.fury.io/js/et-grunt.svg)](http://badge.fury.io/js/et-grunt)
+# et-grunt 0.1.0 [![npm version](https://badge.fury.io/js/et-grunt.svg)](http://badge.fury.io/js/et-grunt)
 Grunt task loader including [jit-grunt](https://www.npmjs.com/package/jit-grunt)
 
-> E.T. could be an alien or just a shortcut for `easy task`. ET-grunt is a tool which makes a cleaner structure for your registered tasks.
+> et-grunt is a task manager which makes your life easier. It loads tasks when you really need them.
 
 ## Before
 ```js
@@ -56,11 +56,8 @@ require('et-grunt')(grunt, {
 
 ## Usage
 
-
-### Gruntfile
-
 ```js
-require('et-grunt')(grunt, tasksAsObject, jitMappings);
+require('et-grunt')(grunt, tasksAsObject);
 ```
 
 ```js
@@ -101,31 +98,52 @@ grunt manage:js
 grunt minify:js
 ```
 
-#### Default (task)
+#### Gruntdefault task
+
+The very first object value should have the value `default`
+
+```js
+default: ['taskName']
+``` 
+
+#### Default (taskName)
 
 In every object you can write `default` as key and `et-grunt` knows automatically that the following array should be called as default.
 **Example:**
 ```js
-task: {
+taskName: {
 	default: ['concat']
 }
 ```
-Now this task is registered as `grunt task`
+Available as:
+```shell
+grunt taskName
+```
 
 
-#### Subtasks (task:subtask)
+
+#### Subtasks (taskName:subtask)
 
 If you want to have subtasks like `manage:js` then you have to nest an object into the other object. **Example:**
 ```js
-task: {
+taskName: {
 	subtask: ['concat:js']
 }
 ```
-Now this task is registered as `grunt task:subtask`
 
-#### Use static mappings with jit-grunt
+Available as:
+```shell
+grunt taskName:subtask
+```
 
-**Note:** For static mappings please read the how-to [here](https://github.com/shootaroo/jit-grunt)
+---
+
+### Use jit-grunt
+
+> **Note:** How jit-grunt works can you read [here](https://github.com/shootaroo/jit-grunt)
+
+#### Use static mappings
+
 The argument after the tasks are reserved for jit static mappings.
 
 ```js
@@ -133,11 +151,44 @@ var jitMappings = {
 	// all settings
 };
 
-require('et-grunt')(grunt, yourTasks, jitMappings);
+require('et-grunt')(grunt, tasksAsObject, jitMappings);
 ```
+
+#### Use options
+
+`require('et-grunt')(grunt, tasksAsObject)(options);`
+
+Example **pluginsRoot**:
+```js
+require('jit-grunt')(grunt, tasksAsObject)({
+  	pluginsRoot: 'other/dir'
+});
+```
+---
+
+### Pre-Registered tasks
+
+#### tasks
+
+**Default** 
+
+> see which tasks are available
+
+Run `grunt tasks` and you will see all available tasks
+
+![](tasks.png)
+
+**Extended**
+
+> + see which options every task will need
+
+Run `grunt tasks:ext` or `grunt tasks:extended`
+
+![](tasks_ext.png)
 
 ## Release History
 
+- 2015-09-30   v0.1.0   Added jit-grunt options support + pre-registered task.
 - 2015-09-25   v0.0.2   Added jit-grunt static maps support.
 - 2015-09-25   v0.0.1   First release.
 
