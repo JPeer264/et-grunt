@@ -1,7 +1,7 @@
 {
   "name": "et-grunt",
-  "version": "0.1.1",
-  "description": "",
+  "version": "0.1.2",
+  "description": "`et-grunt` register tasks with ease. It is a task manager which makes your life easier.",
   "keywords": [
     "grunt",
     "gruntplugin",
@@ -12,6 +12,7 @@
     "faster",
     "management",
     "etgrunt",
+    "et-grunt",
     "et"
   ],
   "main": "et-grunt.js",
