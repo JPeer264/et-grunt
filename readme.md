@@ -1,7 +1,9 @@
-# et-grunt 0.1.1 [![npm version](https://badge.fury.io/js/et-grunt.svg)](http://badge.fury.io/js/et-grunt) [![Build Status](https://travis-ci.org/JPeer264/et-grunt.svg?branch=master)](https://travis-ci.org/JPeer264/et-grunt)
+# et-grunt
+[![Build Status](https://travis-ci.org/JPeer264/et-grunt.svg?branch=master)](https://travis-ci.org/JPeer264/et-grunt)
+
 > Grunt task manager including [jit-grunt](https://www.npmjs.com/package/jit-grunt)
 
-et-grunt is a task manager which makes your life easier. It also loads tasks when you really need them.
+`et-grunt` register tasks with ease. It is a task manager which makes your life easier. It also loads tasks when you really need them, using [jit-grunt](https://www.npmjs.com/package/jit-grunt).
 
 ## Before
 ```js
@@ -52,7 +54,15 @@ require('et-grunt')(grunt, {
 
 ## Install
 
-`npm install et-grunt --save-dev`
+```sh
+npm install et-grunt --save-dev
+```
+
+or
+
+```sh
+yarn add et-grunt
+```
 
 ## Usage
 
@@ -104,7 +114,7 @@ The very first object value should have the value `default`
 
 ```js
 default: ['taskName']
-``` 
+```
 
 #### Default (taskName)
 
@@ -170,7 +180,7 @@ require('jit-grunt')(grunt, tasksAsObject)({
 
 #### tasks
 
-**Default** 
+**Default**
 
 > see which tasks are available
 
@@ -193,26 +203,6 @@ Run `grunt tasks:ext` or `grunt tasks:extended`
 - 2015-09-25   v0.0.2   Added jit-grunt static maps support.
 - 2015-09-25   v0.0.1   First release.
 
-## License
+# LICENSE
 
-The MIT License (MIT)
-
-Copyright (c) Jan Peer <janpeer264@gmail.com> (jpeer.at)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+MIT © [Jan Peer Stöcklmair](https://www.jpeer.at)
