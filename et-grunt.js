@@ -1,11 +1,4 @@
-// var _ = require('lodash');
-var count = 0;
-var lastIndexOfObject = 0;
-
-var et = {
-	tasks: {},
-	generatedTasks: new Array()
-};
+var json = require('json-extra');
 
 /**
  * @description
@@ -13,170 +6,114 @@ var et = {
  *
  * @param tasks {Object} all tasks which should be generated
  */
-et.saveTasks = function(tasks, toRegisterTasks, countObject) {
-	var grunt = et.grunt;
-	var singleTasks;
-	toRegisterTasks = toRegisterTasks || new Array();
-	tasks = tasks || et.tasks;
+saveTasks = function(grunt, tasks) {
+    var generatedTasks = [];
+    var preparedTasks;
+    var newGruntTask;
 
-	countObject = countObject || 0;
-	for (var keyValue in tasks) {
-		if (typeof tasks[keyValue] === 'object') {
-			// if the array was deeper, slice the difference
-			if (countObject < lastIndexOfObject) {
-				toRegisterTasks.splice(0, lastIndexOfObject);
-			}
+    preparedTasks = json.chain(tasks, {type: 'array'}, ':');
 
-			if (!Array.isArray(tasks[keyValue])) {
-				// is no array
-				toRegisterTasks.push(keyValue);
-				countObject++;
+    for (var i = 0; i < preparedTasks.length; i++) {
+        var task         = preparedTasks[i];
+        var gruntTask    = task;
+        var splittedTask = task.split(':');
+        var objectToPush = {};
 
-				if (countObject > lastIndexOfObject && toRegisterTasks.length !== 1) {
-					toRegisterTasks.splice(0, (countObject - lastIndexOfObject))
-				}
+        // check if they are set as default
+        if (splittedTask[splittedTask.length - 1] === 'default') {
+            newGruntTask = splittedTask.slice(0, splittedTask.length - 1);
+            // check if it is the grunt:default or just any nested default
+            newGruntTask = newGruntTask.length === 0 ? ['default'] : newGruntTask;
+            gruntTask    = newGruntTask.join(':');
+        }
 
-				// cache old
-				lastIndexOfObject = countObject;
+        objectToPush.task = gruntTask;
+        objectToPush.options = grunt.util._.get(tasks, splittedTask);
 
-				// call recursive
-				et.saveTasks(tasks[keyValue], toRegisterTasks, countObject);
+        generatedTasks.push(objectToPush);
+    }
 
-				// grunt.verbose.writeln('_______'.green);
-				// grunt.verbose.writeln('Key:   ' + keyValue);
-				// grunt.verbose.writeln('Count: ' + countObject);
-				// grunt.verbose.writeln('Cachedcount: ' + lastIndexOfObject);
-				// grunt.verbose.writeln('Tasks: ' + toRegisterTasks);
-			} else {
-				// is array
-				var adding = '';
-				var showTasks = '';
-				var taskArray;
-
-				singleTasks = tasks[keyValue];
-				lastIndexOfObject = countObject;
-
-				// if the keyValue's name is not default
-				// keyValue should be added to the tasks
-				if (keyValue !== 'default') {
-					// is toRegisterTasks empty?
-					if (toRegisterTasks.length === 0) {
-						adding = keyValue;
-					} else {
-						adding = ':' + keyValue;
-					}
-				} else if (keyValue === 'default' && countObject === 0) { // register default task
-					adding = keyValue
-				}
-
-				showTasks = toRegisterTasks.join(':') + adding;
-
-				taskArray = {
-					task: showTasks,
-					options: singleTasks
-				};
-
-				et.generatedTasks.push(taskArray);
-
-				// grunt.verbose.writeln('_______'.red);
-				// grunt.verbose.writeln('Key:   ' + keyValue);
-				// grunt.verbose.writeln('Count: ' + countObject);
-				// grunt.verbose.writeln('Cachedcount: ' + lastIndexOfObject);
-				// grunt.verbose.writeln('Tasks: ' + toRegisterTasks + ':' + keyValue);
-			}
-		}
-	}
-
-	count++;
+    registerTasks(grunt, generatedTasks);
+    registerSmartTableTask(grunt, generatedTasks);
 };
 
 /**
  * register every task which is saved in generatedTasks
  */
-et.registerTasks = function() {
-	var grunt = et.grunt;
-	var tasks = et.generatedTasks;
+registerTasks = function(grunt, generatedTasks) {
+    grunt.util._.forEach(generatedTasks, function(elem){
+        var task = elem.task;
+        var opts = elem.options;
 
-	grunt.util._.forEach(tasks, function(elem){
-		var task = elem.task;
-		var opts = elem.options;
+        grunt.registerTask(task, opts);
 
-		grunt.registerTask(task, opts);
-
-		grunt.verbose.writeln('_____________________'.bold.green);
-		grunt.verbose.writeln('Successful generated:'.green);
-		grunt.verbose.writeln('Task:    ' + task);
-		grunt.verbose.writeln('Options: ' + opts);
-		grunt.verbose.writeln('');
-	});
+        grunt.verbose.writeln('_____________________'.bold.green);
+        grunt.verbose.writeln('Successful generated:'.green);
+        grunt.verbose.writeln('Task:    ' + task);
+        grunt.verbose.writeln('Options: ' + opts);
+        grunt.verbose.writeln('');
+    });
 };
 
 /**
  * register the `tasks` task.
  */
-et.registerSmartTableTask = function() {
-	var grunt = et.grunt;
-	var tasks = et.generatedTasks;
+registerSmartTableTask = function(grunt, generatedTasks) {
+    // register tasks list
+    grunt.registerTask('tasks', function (extension) {
 
-	// register tasks list
-	grunt.registerTask('tasks', function (extension) {
-		
-		// layout purposes
-		grunt.log.writeln('===============');
-		grunt.log.writeln('Available tasks');
-		grunt.log.writeln('===============');
+        // layout purposes
+        grunt.log.writeln('===============');
+        grunt.log.writeln('Available tasks');
+        grunt.log.writeln('===============');
 
-		// show the first line, once
-		grunt.log.writeln('---------------');
-		
-		// forEach through the tasks array
-		grunt.util._.forEach(tasks, function(elem) {
-			var task = elem.task;
-			var opts = elem.options;
+        // show the first line, once
+        grunt.log.writeln('---------------');
 
-			// show the task
-			switch(extension) {
-				// easter egg
-				case 'zebra': grunt.log.ok((task).zebra);
-				break;
+        // forEach through the tasks array
+        grunt.util._.forEach(generatedTasks, function(elem) {
+            var task = elem.task;
+            var opts = elem.options;
 
-				// easter egg
-				case 'rainbow': grunt.log.ok((task).rainbow);
-				break;
+            // show the task
+            switch(extension) {
+                // easter egg
+                case 'zebra': grunt.log.ok((task).zebra);
+                break;
 
-				default: grunt.log.ok((task).green);
-			}
+                // easter egg
+                case 'rainbow': grunt.log.ok((task).rainbow);
+                break;
 
-			// show the options just if the subtask is ext or extended
-			if (extension === 'ext' || extension === 'extended') {
-				console.log(opts);
-			}
+                default: grunt.log.ok((task).green);
+            }
 
-			// show the last line, each
-			grunt.log.writeln('---------------');
+            // show the options just if the subtask is ext or extended
+            if (extension === 'ext' || extension === 'extended') {
+                console.log(opts);
+            }
 
-		});
-	});
+            // show the last line, each
+            grunt.log.writeln('---------------');
+
+        });
+    });
 };
 
 module.exports = function factory(grunt, tasks, jitMappings) {
-	et.grunt = grunt;
-	et.tasks = tasks;
 
-	// initialize tasks
-	et.saveTasks();
-	et.registerTasks();
-	et.registerSmartTableTask();
+    // initialize tasks
+    saveTasks(grunt, tasks);
 
-	// jit-grunt static mappings || https://github.com/shootaroo/jit-grunt#static-mappings
-	jitMappings = jitMappings || {};
+    // jit-grunt static mappings || https://github.com/shootaroo/jit-grunt#static-mappings
+    jitMappings = jitMappings || {};
 
-	require('jit-grunt')(grunt, jitMappings);
+    require('jit-grunt')(grunt, jitMappings);
 
-	// jit-grunt options || https://github.com/shootaroo/jit-grunt#options
-	return function (options) {
-		options = options || {};
+    // jit-grunt options || https://github.com/shootaroo/jit-grunt#options
+    return function (options) {
+        options = options || {};
 
-		require('jit-grunt')(grunt)(options);
-	};
+        require('jit-grunt')(grunt)(options);
+    };
 }
