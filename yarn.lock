@@ -320,9 +320,9 @@ js-yaml@~3.5.2:
     argparse "^1.0.2"
     esprima "^2.6.0"
 
-json-extra@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/json-extra/-/json-extra-0.4.0.tgz#bb28cae71d3611cfc3478c9f7f9c430fb247573d"
+json-extra@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/json-extra/-/json-extra-0.5.0.tgz#5b8d9b645a76bf4187ef93ed781d2685561dc850"
   dependencies:
     fs-extra "^1.0.0"
     lodash.includes "^4.3.0"
