@@ -40,9 +40,6 @@
     "jit-grunt": "^0.10.0",
     "json-extra": "^0.5.0"
   },
-  "peerDependencies": {
-    "grunt": "1.x"
-  },
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-clean": "^1.0.0",
